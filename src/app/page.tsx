@@ -276,7 +276,7 @@ export default async function Home() {
           Daniel Puig Gerarde - Sr. Software Engineer & Dad
           </h1>
           <p className="mt-6 text-base text-zinc-600 dark:text-zinc-400 text-justify">
-          Welcome to my personal space on the web—a blend of tech passion, hands-on engineering, and family values. I'm a Senior Software Engineer and proud dad based in sunny South Florida, fluent in both Spanish and English. With a deep passion for technology, I specialize in Go programming and DevOps, constantly exploring innovative solutions to simplify complex challenges. Here, you'll find insights on cutting-edge tech trends, practical programming tips, and a glimpse into my journey as both an engineer and a parent. Join me as I navigate the ever-evolving world of technology, share my professional experiences, and celebrate life’s beautiful blend of work and family.
+          Welcome to my personal space on the web—a blend of tech passion, hands-on engineering, and family values. I am a Senior Software Engineer and proud dad based in sunny South Florida, fluent in both Spanish and English. With a deep passion for technology, I specialize in Go programming and DevOps, constantly exploring innovative solutions to simplify complex challenges. Here, you will find insights on cutting-edge tech trends, practical programming tips, and a glimpse into my journey as both an engineer and a parent. Join me as I navigate the ever-evolving world of technology, share my professional experiences, and celebrate life is beautiful blend of work and family.
           </p>
           <div className="mt-6 flex gap-6">
             <SocialLink href="https://x.com/dpuiger" aria-label="Follow on X" icon={XIcon} />
