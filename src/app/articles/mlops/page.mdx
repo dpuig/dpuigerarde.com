@@ -1,0 +1,329 @@
+import { ArticleLayout } from '@/components/ArticleLayout'
+
+export const article = {
+  author: 'Daniel Puig',
+  date: '2025-01-13',
+  title: 'MLOps: Operationalizing Machine Learning at Scale',
+  description:
+    'Most Machine Learning projects never make it to production. Not because the models don\'t work, but because building a model is only 10% of the journey. The other 90%? That\'s MLOps. This article explores how MLOps bridges data science and engineering, covering DevOps foundations, MLflow, and Kubeflow.',
+}
+
+export const metadata = {
+  title: article.title,
+  description: article.description,
+}
+
+export default (props) => <ArticleLayout article={article} {...props} />
+
+Most Machine Learning projects never make it to production. Not because the models don't work, but because building a model is only 10% of the journey.
+
+**The other 90%? That's MLOps.**
+
+While DevOps revolutionized software delivery, ML systems face unique challenges: models decay over time, data constantly changes, and a single notebook experiment needs to transform into a scalable, monitored system.
+
+MLOps bridges data science and engineering, automating the entire ML lifecycle, from training to deployment to continuous monitoring. Yet organizations struggle: fragmented tools, team silos, technical debt, and no clear roadmap.
+
+---
+
+## DevOps: Bridging Development and Operations
+
+DevOps is the combination of cultural philosophies, practices, and tools that increases an organization's ability to deliver applications and services at high velocity evolving and improving products at a faster pace than organizations using traditional software development and infrastructure management processes.
+
+### The Problem It Solves
+
+DevOps emerged around 2007 when developers who wrote code often worked separately from operations teams that supported the code in production, resulting in inefficient processes and a lack of collaboration between siloed teams.
+
+### Core Principles
+
+- **Breaking Down Silos**: Development and operations teams coalesce into a functional team that communicates, shares feedback, and collaborates throughout the entire development and deployment cycle.
+- **The Three Ways**: DevOps operates on flow (optimizing the entire value stream), feedback (rapid detection and correction), and continuous learning (embracing experimentation and improvement).
+- **Automation**: Automation reduces human errors, increases team productivity, and enables teams to achieve continuous improvement with short iteration times for quick customer response.
+
+### Key Practices
+
+- **CI/CD**: Automated integration and deployment pipelines that test changes continuously
+- **Infrastructure as Code**: Managing development, testing, and production environments in a repeatable and efficient manner
+- **Monitoring**: Real-time visibility into system performance and issues
+- **DevSecOps**: Security integrated throughout the development lifecycle
+
+### Business Value
+
+DevOps delivers speed (faster innovation and market adaptation), reliability (consistent quality at high velocity), scale (efficient management of complex systems), and improved collaboration through shared workflows and responsibilities.
+
+---
+
+## MLOps
+
+Machine Learning Operations (MLOps) are a set of practices that automate and simplify machine learning workflows and deployments, unifying ML application development (Dev) with ML system deployment and operations (Ops).
+
+### The Unique Challenge
+
+Data scientists can implement and train an ML model with predictive performance on an offline holdout dataset, but the real challenge isn't building an ML model the challenge is building an integrated ML system and continuously operating it in production.
+
+### Beyond Traditional DevOps
+
+MLOps is a paradigm that leverages three contributing disciplines: machine learning, software engineering (especially DevOps), and data engineering, aimed at productionizing machine learning systems by bridging the gap between development and operations. While DevOps principles apply, ML systems introduce unique complexities: models must be continuously retrained with new data, data quality directly impacts model performance, and model behavior can degrade over time without code changes.
+
+### Core Principles
+
+MLOps defines an optimal experience as one where machine learning assets are treated consistently with all other software assets within a CI/CD environment, where ML models can be deployed alongside the services that wrap them and consume them as part of a unified release process.
+
+**The Four Continuous Practices** (extending DevOps):
+
+1. **Continuous Integration (CI)**: Extends testing and validating code by adding testing and validating data and models.
+2. **Continuous Delivery (CD)**: Concerns delivery of an ML training pipeline that automatically deploys the ML model prediction service.
+3. **Continuous Training (CT)**: Unique to ML systems automatically retrains ML models for redeployment.
+4. **Continuous Monitoring (CM)**: Monitors production data and model performance metrics bound to business metrics.
+
+### The Complete Lifecycle
+
+The complete MLOps process includes three broad phases:
+
+1. **Designing the ML powered application** (business and data understanding)
+2. **ML Experimentation and Development** (model creation and validation)
+3. **ML Operations** (delivering models in production using established DevOps practices)
+
+### Versioning Everything
+
+The goal of versioning is to treat ML training scripts, ML models, and datasets for model training as first class citizens in DevOps processes by tracking ML models and datasets with version control systems. This includes code, data, model artifacts, hyperparameters, and infrastructure configurations.
+
+### Maturity Through Automation
+
+The level of automation of the data, ML model, and code pipelines determines the maturity of the ML process, with increased maturity leading to increased velocity for training new models. Organizations progress from:
+
+- **Level 0**: Manual processes
+- **Level 1**: Automated training pipelines
+- **Level 2**: Fully automated ML and CI/CD pipelines
+
+### The Business Impact
+
+By adopting an MLOps approach, data scientists and machine learning engineers can collaborate and increase the pace of model development and production by implementing continuous integration and deployment practices with proper monitoring, validation, and governance of ML models.
+
+> In essence, MLOps extends DevOps principles to address the unique challenges of machine learning: managing data as a versioned asset, handling model drift, automating retraining, and ensuring reproducibility across the entire ML lifecycle from raw data to production predictions.
+
+---
+
+## MLflow: A Tool for Managing the Machine Learning Lifecycle
+
+[MLflow](https://mlflow.org/docs/latest/ml/) is an open source, vendor neutral platform designed to handle the complexities of the entire machine learning lifecycle. Whether you're working on traditional ML models or cutting-edge deep learning applications, MLflow provides the infrastructure needed to make your ML projects manageable, traceable, and reproducible.
+
+### Core Capabilities
+
+#### MLflow Tracking: Experiment Management
+
+The tracking system provides comprehensive logging for ML experiments, enabling teams to record parameters, metrics, artifacts, and code versions. Key benefits include:
+
+- Organized experiment comparison
+- Built-in visualization for model performance
+- Centralized artifact storage for models and plots
+- Seamless collaboration across teams
+
+This makes it easy to track multiple model experiments and share results organization-wide.
+
+#### MLflow Model Registry: Version Control for ML
+
+The Model Registry acts as a centralized hub for managing model versions throughout their lifecycle. It provides:
+
+- Automatic lineage tracking
+- Stage management (development, staging, production, archived)
+- Team-based review workflows
+- Organization-wide model discovery
+
+This ensures that teams can promote models through different stages with proper governance and maintain clear visibility into model evolution.
+
+#### MLflow Models: Standardized Deployment
+
+MLflow Models provides a standardized format for packaging ML models from any library, making them deployable to various platforms. The system supports multiple deployment targets including:
+
+- REST APIs
+- Cloud platforms (AWS SageMaker, Azure ML, Google Cloud)
+- Kubernetes clusters
+- Edge devices
+
+With built-in REST API serving, automatic input validation, and support for both real-time and batch inference, teams can deploy production-ready models at scale.
+
+#### MLflow Evaluation: Automated Validation
+
+The evaluation component offers comprehensive model validation tools with automated metrics calculation for classification, regression, and other ML tasks. Teams can create custom evaluators for domain-specific metrics, compare multiple models side-by-side, and track evaluation datasets to ensure reproducible validation results.
+
+### Extensive ML Library Integration
+
+MLflow provides native integrations with popular ML frameworks including:
+
+- **Traditional ML**: Scikit-learn, XGBoost, Spark MLlib
+- **Deep Learning**: TensorFlow, PyTorch, Keras
+- **AutoML** capabilities for automated model training and hyperparameter tuning
+
+The autologging feature automatically captures parameters, metrics, and models for supported frameworks, reducing manual tracking overhead.
+
+### Deployment Flexibility
+
+One of MLflow's key strengths is its vendor-neutral design, allowing deployment across diverse environments:
+
+- Local development for experimentation and testing
+- On-premises clusters for enterprise deployments
+- Cloud platforms (AWS, Azure, Google Cloud) for scalable production systems
+- Managed services like Databricks for integrated ML operations
+
+This flexibility ensures teams can use MLflow regardless of their infrastructure choices, maintaining consistent workflows across development and production environments.
+
+### Why MLflow Matters
+
+MLflow addresses critical challenges in ML operations:
+
+- **Reproducibility**: Track every experiment detail for consistent results
+- **Collaboration**: Enable teams to share experiments and models seamlessly
+- **Scalability**: Deploy models from laptop to cloud with the same tools
+- **Governance**: Manage model versions and approvals systematically
+
+By providing a unified platform for the entire ML lifecycle from experimentation through production deployment and monitoring, MLflow helps teams move faster while maintaining reliability and best practices. Its open-source nature and broad ecosystem support make it accessible to organizations of any size, from startups to enterprises.
+
+---
+
+## Kubeflow: The Foundation for AI Platforms on Kubernetes
+
+[Kubeflow](https://www.kubeflow.org/docs/started/introduction/) represents a paradigm shift in how organizations build and deploy machine learning infrastructure. As an open source, Kubernetes-native platform, it provides the foundation for AI platforms that are composable, modular, portable, and scalable addressing the full spectrum of the AI lifecycle from experimentation to production.
+
+### What Makes Kubeflow Unique
+
+Unlike monolithic ML platforms, Kubeflow is designed with flexibility at its core. Organizations can deploy individual Kubeflow projects independently or combine them into a complete AI reference platform tailored to their specific needs. This modular approach allows teams to start small and scale as requirements grow, without being locked into a single vendor's ecosystem.
+
+### The Kubernetes Advantage
+
+Kubeflow leverages Kubernetes' strengths to solve ML-specific challenges:
+
+- **Portable deployments**: Experiment on a laptop, then seamlessly move to on-premises clusters or cloud environments
+- **Microservices architecture**: Deploy and manage loosely-coupled ML components
+- **Elastic scaling**: Automatically scale resources based on demand
+- **Infrastructure abstraction**: Write code once, run anywhere Kubernetes operates
+
+### Core Kubeflow Projects
+
+#### Kubeflow Pipelines: Orchestrating ML Workflows
+
+Pipelines enable teams to compose, deploy, and manage end-to-end ML workflows with built-in support for experimentation, versioning, and visualization. The component-based architecture allows reusable workflow steps that can be assembled into complex pipelines, with native support for both Jupyter notebook development and production deployment.
+
+#### Kubeflow Notebooks: Interactive Development
+
+Provides managed Jupyter notebooks with seamless integration to Kubernetes resources, enabling data scientists to experiment interactively while having access to scalable compute resources. The notebook server integrates directly with other Kubeflow components for smooth transitions from development to production.
+
+#### Kubeflow Trainer: Distributed Training
+
+*(formerly Training Operator)*
+
+Supports distributed training for multiple frameworks including PyTorch, TensorFlow, XGBoost, and JAX through custom Kubernetes resources. The trainer simplifies complex distributed training configurations, handles fault tolerance, and provides specialized support for LLM fine-tuning and techniques like DeepSpeed.
+
+#### Kubeflow Katib: Hyperparameter Optimization
+
+Automates hyperparameter tuning and neural architecture search using multiple optimization algorithms. Katib runs parallel experiments, tracks results, and supports early stopping to efficiently find optimal model configurations without manual intervention.
+
+#### KServe: Production Inference
+
+*(Kubeflow Model Serving)*
+
+Provides serverless inference serving with support for auto-scaling, canary deployments, and multi-framework support. KServe handles the complexities of serving models at scale, including request batching, GPU optimization, and integration with service meshes for advanced traffic management.
+
+#### Kubeflow Model Registry: Version Control for Models
+
+Centralized registry for tracking model versions, metadata, and lineage throughout the model lifecycle. The registry integrates with pipelines and serving components to maintain clear connections between training runs and deployed models.
+
+#### Kubeflow Spark Operator: Large-Scale Data Processing
+
+Enables native Spark workload execution on Kubernetes for big data processing tasks, providing seamless integration with other Kubeflow components for data preparation and feature engineering at scale.
+
+### The Kubeflow AI Reference Platform
+
+When organizations need comprehensive end-to-end capabilities, the Kubeflow AI reference platform combines all projects with additional integration tools:
+
+- **Central Dashboard**: Unified UI for accessing all Kubeflow components
+- **Profile Controller**: Multi-tenancy support with namespace isolation and resource quotas
+- **Packaged Distributions**: Pre-integrated platforms maintained by cloud providers (AWS, Azure, Google Cloud) and community distributions
+
+### Design Principles
+
+- **Composability**: Individual components work independently or together, allowing teams to mix and match tools based on requirements. Different versions of frameworks can coexist within the same platform.
+- **Portability**: Platform-agnostic design ensures ML workflows run consistently across environments, from local development to multi-cloud production deployments without code changes.
+- **Scalability**: Automatic resource management enables workflows to access compute when needed and release it when idle, optimizing both performance and cost.
+
+### Real-World Impact
+
+Kubeflow addresses critical ML operations challenges:
+
+- **Reproducibility**: Every experiment is tracked with full lineage from data to deployed models
+- **Collaboration**: Teams share notebooks, pipelines, and models through centralized repositories
+- **Production Readiness**: Seamless transitions from experimentation to production serving
+- **Infrastructure Efficiency**: Kubernetes' resource management optimizes compute utilization
+
+### The Evolution Story
+
+Kubeflow originated from Google's internal TensorFlow Extended (TFX) project, initially focused on simplifying TensorFlow deployments on Kubernetes. The project has evolved into a vendor-neutral foundation backed by a vibrant open-source community under the Linux Foundation. The logo's design combining the 'K' from Kubernetes with 'F' representing flow (dataflow graphs used in ML) symbolizes the fusion of cloud-native and machine learning communities.
+
+### Why Kubeflow Matters
+
+In an ecosystem where organizations spend billions on ML projects but struggle with production deployment, Kubeflow provides the missing operational framework. It transforms ML from experimental prototypes into reliable, scalable production systems by bringing software engineering best practices to the ML lifecycle.
+
+The platform's vendor-neutral approach prevents lock-in while its Kubernetes foundation ensures long-term viability as the cloud-native ecosystem continues to mature. Whether running on-premises, in the cloud, or in hybrid environments, Kubeflow provides consistent tooling that grows with organizational needs.
+
+For AI practitioners, Kubeflow means focusing on models rather than infrastructure. For platform teams, it provides a proven foundation for building enterprise-grade AI platforms. And for organizations, it represents a path to operationalizing ML at scale without rebuilding the wheel.
+
+---
+
+## References
+
+### MLOps Research Papers
+
+- [Machine Learning Operations (MLOps): Overview, Definition, and Architecture](https://ieeexplore.ieee.org/document/10081336)
+- [Towards MLOps: A Framework and Maturity Model](https://ieeexplore.ieee.org/document/9582569)
+- [An analysis of the challenges in the adoption of MLOps](https://www.sciencedirect.com/science/article/pii/S2444569X24001768)
+
+### MLOps and DevOps Tools
+
+- [MLflow Documentation](https://mlflow.org/docs/latest/ml/)
+- [Kubeflow Introduction](https://www.kubeflow.org/docs/started/introduction/)
+- [Top MLOps Tools - Analytics Vidhya](https://www.analyticsvidhya.com/blog/2024/04/top-mlops-tools/)
+- [MLOps Tools Landscape - Neptune.ai](https://neptune.ai/blog/mlops-tools-platforms-landscape)
+- [How Companies Implement MLOps - Neptune.ai](https://neptune.ai/blog/how-these-8-companies-implement-mlops)
+- [MLOps Principles - Ideas2IT](https://www.ideas2it.com/blogs/mlops-principles-machine-learning-operations)
+- [MLOps Tools Guide - SG Analytics](https://www.sganalytics.com/blog/mlops-tools/)
+- [MLOps Tools Overview - LakeFS](https://lakefs.io/blog/mlops-tools/)
+- [Top MLOps Tools 2025 - MLOps Crew](https://www.mlopscrew.com/blog/10-must-know-mlops-tools-dominating-2025)
+- [Machine Learning Infrastructure - Articsledge](https://www.articsledge.com/post/machine-learning-infrastructure)
+- [MLOps Guide - Hatchworks](https://hatchworks.com/blog/gen-ai/mlops-what-you-need-to-know/)
+- [Metaflow (Netflix)](https://metaflow.org/)
+- [MLOps Engineering at Scale - Manning](https://www.manning.com/books/mlops-engineering-at-scale)
+
+### LLMOps Resources
+
+- [Best LLMOps Platforms 2025 - Braintrust](https://www.braintrust.dev/articles/best-llmops-platforms-2025)
+- [What is LLMOps - Orq.ai](https://orq.ai/blog/what-is-llmops)
+- [Top LLMOps Tools - Dextra Labs](https://dextralabs.com/blog/top-llmops-tools/)
+- [LLMOps Tools Guide - DataCamp](https://www.datacamp.com/blog/llmops-tools)
+- [LLMOps Tools Comparison - AI Multiple](https://research.aimultiple.com/llmops-tools/)
+- [LLMOps Tools 2025 - TrueFoundry](https://www.truefoundry.com/blog/llmops-tools)
+- [LLMOps Implementation Guide - Neptune.ai](https://neptune.ai/blog/llmops)
+- [LLMOps Case Studies - ZenML](https://www.zenml.io/blog/llmops-in-production-457-case-studies-of-what-actually-works)
+
+### DevOps Principles and Practices
+
+- [DevOps Guide 2025 - Instatus](https://instatus.com/blog/devops)
+- [DevOps Principles - Atlassian](https://www.atlassian.com/devops/what-is-devops)
+- [DevOps - Wikipedia](https://en.wikipedia.org/wiki/DevOps)
+- [DevOps Pillars - GitProtect](https://gitprotect.io/blog/devops-pillars-top-11-devops-principles/)
+- [DevOps Best Practices - LambdaTest](https://www.lambdatest.com/blog/devops-best-practices/)
+- [DevOps Guide - Hoop.dev](https://hoop.dev/blog/the-definitive-guide-to-devops-principles-practices-and-future-directions/)
+- [What is DevOps - AWS](https://aws.amazon.com/devops/what-is-devops/)
+- [The Three Ways of DevOps - Mumo Systems](https://www.mumosystems.com/blog/2024/05/the-three-ways-explained-foundational-principles-of-devops/)
+- [Future of DevOps - DevOps.com](https://devops.com/the-future-of-devops-key-trends-innovations-and-best-practices-in-2025/)
+- [DevOps Basics - Medium](https://medium.com/@dave-patten/the-basics-of-devops-principles-and-practices-2e6bb3a4832c)
+
+### MLOps Principles and Standards
+
+- [MLOps Principles - ML-Ops.org](https://ml-ops.org/content/mlops-principles)
+- [MLOps Playbook - Instatus](https://instatus.com/blog/mlops-playbook)
+- [MLOps Definition - Databricks](https://www.databricks.com/glossary/mlops)
+- [MLOps Best Practices - Clarifai](https://www.clarifai.com/blog/mlops-best-practices)
+- [MLOps - Wikipedia](https://en.wikipedia.org/wiki/MLOps)
+- [What is MLOps - AWS](https://aws.amazon.com/what-is/mlops/)
+- [MLOps Literature Review - ScienceDirect](https://www.sciencedirect.com/science/article/abs/pii/S0950584925000722)
+- [Google Cloud MLOps](https://docs.cloud.google.com/architecture/mlops-continuous-delivery-and-automation-pipelines-in-machine-learning)
+- [MLOps Best Practices Guide - Cloud Folio3](https://cloud.folio3.com/blog/mlops-best-practices/)
