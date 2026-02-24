@@ -1,0 +1,139 @@
+import { ArticleLayout } from '@/components/ArticleLayout'
+
+export const article = {
+  author: 'Daniel Puig',
+  date: '2026-02-23',
+  title: 'Building CloudDB: A Self-Hosted Database Platform for Kubernetes',
+  description:
+    'Running databases on Kubernetes has a reputation for being painful. I built CloudDB to change that: a Kubernetes-native, self-hosted DBaaS control plane with a React dashboard and a Go API that wraps the Zalando Postgres Operator. Here\'s what I built, why, and where it\'s heading.',
+}
+
+export const metadata = {
+  title: article.title,
+  description: article.description,
+}
+
+export default (props) => <ArticleLayout article={article} {...props} />
+
+Running databases on Kubernetes has a reputation for being painful. The tooling is powerful, but it's scattered, the learning curve is steep, and every team ends up writing the same glue code to automate the same routine tasks. I wanted to change that, at least for my own projects, so I built **CloudDB**: a Kubernetes-native, self-hosted Database-as-a-Service (DBaaS) control plane with a clean React dashboard and a Go API that actually talks to the cluster.
+
+This post walks through what I built, why I made the decisions I made, and where the project is heading.
+
+---
+
+## The Problem Worth Solving
+
+Managed database services from cloud providers are convenient, but they come with trade-offs: vendor lock-in, limited configuration access, surprise bills, and the inability to run things on your own infrastructure. On the other hand, running a bare-metal or Kubernetes-native database requires deep operational knowledge. You're on the hook for provisioning, upgrades, backups, and recovery.
+
+What the ecosystem was missing was a middle ground: a **control plane** that wraps the existing best-in-class Kubernetes database operators (which do the heavy lifting), and exposes everything through a single, friendly UI. That is exactly what CloudDB is.
+
+---
+
+## What CloudDB Does
+
+At its core, CloudDB lets you spin up and manage production-grade PostgreSQL clusters from a browser, without touching `kubectl` or writing a single line of YAML. Under the hood, every action translates to a Kubernetes Custom Resource that the [Zalando Postgres Operator](https://github.com/zalando/postgres-operator) reconciles.
+
+Here is a quick tour of the features shipped so far:
+
+### Cluster Provisioning
+
+You fill out a form (name, PostgreSQL version, CPU/memory/storage limits, replica count, and whether you want an external load balancer) and CloudDB takes care of the rest. The Go backend translates that request into a `postgresqls.acid.zalan.do` Custom Resource and applies it to the cluster via `client-go`. No YAML, no manual patching.
+
+### Day-2 Operations
+
+A cluster doesn't need management just on day one. CloudDB covers the ongoing ops that would otherwise require kubectl access:
+
+- **Scale:** adjust CPU, memory, and replica count at any time
+- **Pause:** scale a cluster to zero replicas to save resources during off-hours or in development environments
+- **Resume:** bring a paused cluster back to life with a single click
+- **Delete:** cleanly remove a cluster with a confirmation dialog (no accidental deletions)
+
+### PostgreSQL Major Version Upgrades
+
+This is the feature I'm most proud of, and the one I'd expect production teams to care about most.
+
+Upgrading a PostgreSQL major version (say, from 14 to 16) is notoriously risky. The Zalando operator supports it through `pg_upgrade`, but triggering it incorrectly can cause downtime or data integrity issues. CloudDB wraps the entire process in a **5-check preflight validation** layer before a single byte is changed:
+
+1. The operator must be in `manual` or `full` upgrade mode (not `off`)
+2. The target version must be strictly greater than the current one (no downgrades)
+3. The version jump cannot exceed 2 major versions at a time
+4. The cluster must be in `Running` status
+5. The cluster must have 5 or fewer replicas (larger clusters should use the operator CLI directly)
+
+If all checks pass, the backend patches the cluster resource and the operator handles the in-place upgrade. On the frontend, users go through a **3-step confirmation flow**: choose the target version, acknowledge the irreversibility with a checkbox, then type the cluster name to confirm. It's intentionally friction-ful. The kind of guardrails that save you at 2am.
+
+### Logical Backups
+
+Each cluster can be configured with `pg_dumpall`-based scheduled backups that upload to S3. The schedule, S3 bucket, region, server-side encryption settings, and retention time are all configurable per cluster via the Edit page. Credentials pass through the system but are redacted in read responses: the API returns `***` for sensitive fields to avoid accidental exposure in logs or UIs.
+
+### Operator Settings
+
+A dedicated Settings page lets you manage the underlying Postgres Operator itself:
+
+- Update the operator version (the backend patches the Deployment image tag directly)
+- Switch the major version upgrade mode (`off`, `manual`, or `full`)
+- Configure global backup settings including the cloud provider (S3, GCS, or Azure), credentials, scheduling, and retention
+
+This is the kind of operational control that usually requires direct cluster access. Here, it's a form in the UI.
+
+---
+
+## Under the Hood
+
+The architecture is intentionally simple: a single developer can run it locally with one command, and it's solid enough to use in a real environment.
+
+```
+Browser
+  │  HTTP (Vite dev proxy → /api/v1)
+  ▼
+Frontend  (React 18 + Vite + Tailwind CSS)
+  │  REST / JSON
+  ▼
+Backend   (Go 1.25 + Gin)
+  │  client-go (dynamic + typed clients)
+  ▼
+Kubernetes Cluster (any distribution)
+  └─ postgresqls.acid.zalan.do CRDs
+  └─ operatorconfigurations CRDs
+```
+
+**Backend (Go + Gin):** A straightforward RESTful API with ten endpoints covering the full cluster lifecycle plus operator management. The key design choice here was to use the Kubernetes **dynamic client** for CRD operations. This avoids generating type code for the Zalando CRDs and makes it much easier to add support for other database operators in the future.
+
+**Frontend (React + TypeScript + Tailwind):** A dark-mode dashboard with a typed Axios API client, toasts for non-blocking feedback, and custom confirmation dialogs that replace all native browser popups. The 3-step upgrade modal is a good example of how the UI enforces safety workflows that the backend alone can't guarantee.
+
+**Local development:** The full stack comes up with `make dev` (Docker Compose). The Go container auto-detects Mac/Windows environments and routes Kubernetes API calls through `host.docker.internal`, so there's no manual kubeconfig editing involved.
+
+---
+
+## The Engineering Philosophy
+
+A few principles guided every decision in this project:
+
+**Correctness over convenience.** The upgrade preflight checks, the credential redaction, the confirmation dialogs: these all add friction. That friction is intentional. A tool that's easy to misuse is a liability in production.
+
+**Operator-agnostic by design.** The backend's translation layer (`translator.go`) cleanly separates the user's intent from the Kubernetes resource shape. Adding support for a new database engine (say, MySQL via the PlanetScale operator) means writing a new translator function and registering a GroupVersionResource. The rest of the stack doesn't change.
+
+**Minimal dependencies, maximal clarity.** The backend has no ORM, no message queue, no in-process state. Every request reads directly from Kubernetes and writes directly to it. Kubernetes is the source of truth, which is exactly what it's designed to be.
+
+---
+
+## What's Next
+
+The project is actively evolving. Here are the areas I'm currently working on:
+
+- **Multi-engine support:** MySQL and Redis operator integration are on the roadmap, following the same translation layer pattern
+- **Monitoring integration:** surfacing Prometheus metrics (connections, replication lag, query throughput) directly in the cluster detail view
+- **RBAC:** the platform currently runs with a single kubeconfig; fine-grained role-based access control is the next major infrastructure piece
+- **Helm chart:** packaging the full platform as a Helm chart for one-command deployment into existing clusters
+
+---
+
+## Wrapping Up
+
+CloudDB started as a personal project to scratch a real itch: I wanted a way to manage Kubernetes PostgreSQL clusters without constantly reaching for `kubectl`. It's grown into something significantly more useful, a full-featured control plane that covers provisioning, day-to-day operations, major version upgrades, backups, and operator configuration.
+
+If you're running databases on Kubernetes and tired of the operational overhead, I'd love to hear from you. I'm available for consulting engagements around Kubernetes database infrastructure.
+
+---
+
+*Interested in working together or have questions about the project? Feel free to reach out. I'm always happy to talk databases and infrastructure.*
