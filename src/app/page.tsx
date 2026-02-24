@@ -273,10 +273,10 @@ export default async function Home() {
       <Container className="mt-9">
         <div className="max-w-2xl">
           <h1 className="text-4xl font-bold tracking-tight text-zinc-800 sm:text-5xl dark:text-zinc-100">
-          Daniel Puig Gerarde - Sr. Software Engineer & Dad
+            Daniel Puig Gerarde — Sr. Platform Engineer
           </h1>
           <p className="mt-6 text-base text-zinc-600 dark:text-zinc-400 text-justify">
-          Welcome to my personal space on the web, a blend of tech passion, hands-on engineering, and family values. I am a Senior Software Engineer, assisting with Software Engineering and Architecture. Focus in DevOps, MLOps, Kubernetes and the Cloud.
+            Sr. Platform Engineer, specializing in Kubernetes, cloud-native infrastructure, and internal developer platforms. I build tools  that help teams ship and operate services. Fluent in Go, DevOps, and the messy space between development and production.
           </p>
           <div className="mt-6 flex gap-6">
             <SocialLink href="https://x.com/dpuiger" aria-label="Follow on X" icon={XIcon} />

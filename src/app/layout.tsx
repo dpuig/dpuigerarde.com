@@ -10,10 +10,10 @@ export const metadata: Metadata = {
   title: {
     template: '%s - Daniel Puig Gerarde',
     default:
-      'Daniel Puig Gerarde - Sr. Software Engineer & Dad',
+      'Daniel Puig Gerarde - Sr. Platform Engineer',
   },
   description:
-    "Welcome to my personal space on the web—a blend of tech passion, hands-on engineering, and family values. I'm a Senior Software Engineer and proud dad based in sunny South Florida, fluent in both Spanish and English. With a deep passion for technology, I specialize in Go programming and DevOps, constantly exploring innovative solutions to simplify complex challenges. Here, you'll find insights on cutting-edge tech trends, practical programming tips, and a glimpse into my journey as both an engineer and a parent. Join me as I navigate the ever-evolving world of technology, share my professional experiences, and celebrate life’s beautiful blend of work and family.",
+    "Sr. Platform Engineer, specializing in Kubernetes, cloud-native infrastructure, and internal developer platforms. I build tools  that help teams ship and operate services. Fluent in Go, DevOps, and the messy space between development and production.",
   alternates: {
     types: {
       'application/rss+xml': `${process.env.NEXT_PUBLIC_SITE_URL}/feed.xml`,
