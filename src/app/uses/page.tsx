@@ -36,85 +36,91 @@ function Tool({
 
 export const metadata = {
   title: 'Uses',
-  description: 'Software I use, gadgets I love, and other things I recommend.',
+  description: 'The tools, platforms, and technologies I use to build sovereign cloud and AI infrastructure.',
 }
 
 export default function Uses() {
   return (
     <SimpleLayout
-      title="Software I use, gadgets I love, and other things I recommend."
-      intro="I get asked a lot about the things I use to build software, stay productive, or buy to fool myself into thinking I’m being productive when I’m really just procrastinating. Here’s a big list of all of my favorite stuff."
+      title="The tools I use to build sovereign infrastructure."
+      intro="My toolkit for architecting sovereign cloud platforms, deploying edge-AI, and automating DevSecOps, from provisioning to observability."
     >
       <div className="space-y-20">
-        <ToolsSection title="Workstation">
-          <Tool title="16” MacBook Pro, M1 Max, 64GB RAM (2021)">
-            I was using an Intel-based 16” MacBook Pro prior to this and the
-            difference is night and day. I’ve never heard the fans turn on a
-            single time, even under the incredibly heavy loads I put it through
-            with our various launch simulations.
+        <ToolsSection title="Infrastructure & Orchestration">
+          <Tool title="Cluster API (CAPI)">
+            Multi-cloud and on-prem Kubernetes provisioning written in Go.
+            Declarative cluster lifecycle management without proprietary vendor APIs. The foundation of every sovereign platform I build.
           </Tool>
-          <Tool title="Apple Pro Display XDR (Standard Glass)">
-            The only display on the market if you want something HiDPI and
-            bigger than 27”. When you’re working at planetary scale, every pixel
-            you can get counts.
+          <Tool title="Talos Linux">
+            An immutable, security-hardened operating system designed for
+            Kubernetes. API-managed with no SSH access, dramatically reducing
+            the attack surface. My default OS for production clusters.
           </Tool>
-          <Tool title="IBM Model M SSK Industrial Keyboard">
-            They don’t make keyboards the way they used to. I buy these any time
-            I see them go up for sale and keep them in storage in case I need
-            parts or need to retire my main.
+          <Tool title="Kubernetes">
+            CKA-compliant container orchestration. Standardized for portability
+            across any environment, whether public cloud, private data center, or
+            edge deployment.
           </Tool>
-          <Tool title="Apple Magic Trackpad">
-            Something about all the gestures makes me feel like a wizard with
-            special powers. I really like feeling like a wizard with special
-            powers.
-          </Tool>
-          <Tool title="Herman Miller Aeron Chair">
-            If I’m going to slouch in the worst ergonomic position imaginable
-            all day, I might as well do it in an expensive chair.
+          <Tool title="Terraform / OpenTofu">
+            Infrastructure as Code for provisioning the underlying compute,
+            networking, and storage. I use OpenTofu for fully open-source
+            deployments when vendor neutrality is critical.
           </Tool>
         </ToolsSection>
-        <ToolsSection title="Development tools">
-          <Tool title="Sublime Text 4">
-            I don’t care if it’s missing all of the fancy IDE features everyone
-            else relies on, Sublime Text is still the best text editor ever
-            made.
+        <ToolsSection title="Networking & Security">
+          <Tool title="Cilium (eBPF)">
+            eBPF-powered networking, observability, and security for
+            Kubernetes. Identity-based policies, transparent encryption, and
+            deep packet visibility via Hubble. Essential for zero-trust
+            architectures and modern compliance requirements.
           </Tool>
-          <Tool title="iTerm2">
-            I’m honestly not even sure what features I get with this that aren’t
-            just part of the macOS Terminal but it’s what I use.
+          <Tool title="OpenBao">
+            Open-source secrets management (forked from HashiCorp Vault).
+            Dynamic secrets, encryption as a service, and PKI that ensures
+            client keys are never stored in a foreign-owned SaaS.
           </Tool>
-          <Tool title="TablePlus">
-            Great software for working with databases. Has saved me from
-            building about a thousand admin interfaces for my various projects
-            over the years.
-          </Tool>
-        </ToolsSection>
-        <ToolsSection title="Design">
-          <Tool title="Figma">
-            We started using Figma as just a design tool but now it’s become our
-            virtual whiteboard for the entire company. Never would have expected
-            the collaboration features to be the real hook.
+          <Tool title="Falco">
+            Runtime security and threat detection for containers and
+            Kubernetes. Real-time alerting on unexpected behavior, syscall
+            monitoring, and audit logging.
           </Tool>
         </ToolsSection>
-        <ToolsSection title="Productivity">
-          <Tool title="Alfred">
-            It’s not the newest kid on the block but it’s still the fastest. The
-            Sublime Text of the application launcher world.
+        <ToolsSection title="AI & Machine Learning">
+          <Tool title="LocalAI">
+            OpenAI-compatible API running entirely on local hardware.
+            Supports LLMs, embeddings, and image generation without sending
+            data to third-party services. Perfect for sovereign AI deployments.
           </Tool>
-          <Tool title="Reflect">
-            Using a daily notes system instead of trying to keep things
-            organized by topics has been super powerful for me. And with
-            Reflect, it’s still easy for me to keep all of that stuff
-            discoverable by topic even though all of my writing happens in the
-            daily note.
+          <Tool title="vLLM">
+            High-throughput LLM serving engine optimized for production
+            inference. Continuous batching and PagedAttention for maximum
+            GPU utilization on private infrastructure.
           </Tool>
-          <Tool title="SavvyCal">
-            Great tool for scheduling meetings while protecting my calendar and
-            making sure I still have lots of time for deep work during the week.
+          <Tool title="Ollama">
+            Simple, developer-friendly local model runner. Great for
+            prototyping and development before scaling to production
+            inference with vLLM.
           </Tool>
-          <Tool title="Focus">
-            Simple tool for blocking distracting websites when I need to just do
-            the work and get some momentum going.
+        </ToolsSection>
+        <ToolsSection title="Development & Productivity">
+          <Tool title="Go">
+            My primary language for infrastructure tooling: Kubernetes
+            operators, CLI tools, platform APIs, and custom controllers.
+            The standard library and concurrency model are unmatched
+            for systems programming.
+          </Tool>
+          <Tool title="VS Code">
+            My editor of choice with the Go extension, Kubernetes tools,
+            and Copilot. The integrated terminal and debugger make it
+            ideal for operator development.
+          </Tool>
+          <Tool title="iTerm2 + tmux">
+            Terminal multiplexing for managing multiple clusters, SSH
+            sessions, and development environments simultaneously.
+          </Tool>
+          <Tool title="Docker & Podman">
+            Container runtimes for local development, CI/CD pipelines,
+            and building OCI-compliant images for production deployment.
           </Tool>
         </ToolsSection>
       </div>

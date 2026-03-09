@@ -10,10 +10,10 @@ export const metadata: Metadata = {
   title: {
     template: '%s - Daniel Puig Gerarde',
     default:
-      'Daniel Puig Gerarde - Sr. Platform Engineer',
+      'Daniel Puig Gerarde - Cloud & AI Infrastructure Architect',
   },
   description:
-    "Sr. Platform Engineer, specializing in Kubernetes, cloud-native infrastructure, and internal developer platforms. I build tools  that help teams ship and operate services. Fluent in Go, DevOps, and the messy space between development and production.",
+    'I architect sovereign cloud platforms, edge-AI inference stacks, and automated DevSecOps pipelines. Specializing in Kubernetes, Cluster API, Talos Linux, Cilium/eBPF, and on-prem AI deployment with LocalAI and vLLM.',
   alternates: {
     types: {
       'application/rss+xml': `${process.env.NEXT_PUBLIC_SITE_URL}/feed.xml`,

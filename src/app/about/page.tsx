@@ -6,7 +6,6 @@ import clsx from 'clsx'
 import { Container } from '@/components/Container'
 import {
   GitHubIcon,
-  InstagramIcon,
   LinkedInIcon,
   XIcon,
 } from '@/components/SocialIcons'
@@ -50,7 +49,7 @@ function MailIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
 export const metadata: Metadata = {
   title: 'About',
   description:
-    'I’m Spencer Sharp. I live in New York City, where I design the future.',
+    'I am Daniel Puig Gerarde, a Sovereign Cloud and AI Infrastructure Architect helping organizations take back control of their data.',
 }
 
 export default function About() {
@@ -73,16 +72,16 @@ export default function About() {
           </h1>
           <div className="mt-6 space-y-7 text-base text-zinc-600 dark:text-zinc-400 text-justify">
             <p>
-            I have a deep passion for building robust software solutions, and Go is my language of choice. Its simplicity, built-in concurrency features, and powerful standard library provide an ideal foundation for creating fast, efficient, and reliable applications. Through both personal and professional projects, I’ve honed my expertise in Go’s ecosystem, exploring everything from microservices architecture to advanced testing methodologies. I’m driven by my love for continuous learning, which keeps me at the forefront of innovative best practices and emerging Go tools. There’s nothing quite like the thrill of discovering a new technique or library that streamlines development and delivers greater value to users.
+              I architect sovereign cloud platforms that give organizations full control over their data and AI workloads. In an era where data sovereignty, regulatory compliance, and AI privacy are critical business concerns, I help companies move off public clouds and into private, hardened infrastructure built on open-source foundations like Kubernetes, Cluster API, and Talos Linux.
             </p>
             <p>
-            In today’s technology landscape, scalability and flexibility are paramount. That’s why I’ve invested significant time mastering Kubernetes and various cloud platforms such as AWS, GCP, and Azure. My fascination with container orchestration stems from seeing how it empowers teams to manage complex systems with confidence and agility. I continually experiment with new cloud services, diving into their documentation and hands-on labs to broaden my knowledge and refine deployment processes. This commitment to staying current ensures I can leverage the full power of containerized applications and cloud-native architectures for high availability and seamless performance.
+              Go is my language of choice for building infrastructure tooling. Its simplicity, concurrency model, and powerful standard library make it ideal for Kubernetes operators, CLI tools, and platform APIs. I&apos;ve built custom operators for database lifecycle management, written provisioning controllers with Cluster API, and developed internal developer platforms that let engineering teams self-service infrastructure without touching YAML.
             </p>
             <p>
-            Automating the software delivery process is one of the most rewarding challenges I’ve embraced. I enjoy designing CI/CD pipelines that enable developers to release new features rapidly while maintaining high-quality standards. From configuring automated tests and code quality checks to implementing secure deployment workflows, I take pride in building pipelines that minimize friction and accelerate innovation. I believe that continuous integration and continuous delivery aren’t just tools; they represent a mindset of constant improvement. By adopting an iterative approach, I can quickly adapt to feedback, maintain a stable codebase, and deliver reliable software solutions that delight users.
+              On the networking and security side, I specialize in Cilium and eBPF for identity-based, zero-trust networking, essential for meeting modern compliance requirements. I pair this with OpenBao for sovereign secrets management, ensuring client keys and sensitive data never leave the organization&apos;s perimeter. My DevSecOps approach automates security patching, policy enforcement, and governance from day one.
             </p>
             <p>
-            Security is at the heart of every project I tackle, as I recognize the enormous responsibility of protecting data and maintaining trust. My enthusiasm for secure coding practices, threat modeling, and vulnerability analysis comes from a desire to build systems that stand the test of time. I proactively stay informed about the latest threats and defenses, continually refining my knowledge through certifications and security forums. Whether it’s implementing robust encryption methods or conducting thorough penetration testing, I approach security as an ongoing journey rather than a one-time checklist. With a strong focus on continuous learning, I ensure every piece of software I create upholds the highest standards of safety and integrity.
+              I&apos;m deeply passionate about edge-AI and on-premise inference. Running large language models on local GPU hardware with tools like LocalAI and vLLM means organizations can fine-tune models on proprietary data without sending a single token to a third-party API. I design the full inference stack, from GPU provisioning to OpenAI-compatible API endpoints, so teams get the power of AI without sacrificing data sovereignty.
             </p>
           </div>
         </div>
@@ -91,22 +90,20 @@ export default function About() {
             <SocialLink href="https://x.com/dpuiger" icon={XIcon}>
               Follow on X
             </SocialLink>
-            {/* <SocialLink href="#" icon={InstagramIcon} className="mt-4">
-              Follow on Instagram
-            </SocialLink> */}
-            <SocialLink href="https://www.linkedin.com/in/dpuigerarde/" icon={GitHubIcon} className="mt-4">
+            <SocialLink href="https://github.com/dpuig" icon={GitHubIcon} className="mt-4">
               Follow on GitHub
             </SocialLink>
             <SocialLink href="https://www.linkedin.com/in/dpuigerarde/" icon={LinkedInIcon} className="mt-4">
               Follow on LinkedIn
             </SocialLink>
-            <SocialLink
-              href="mailto:contact@bkstudio.tech"
-              icon={MailIcon}
-              className="mt-8 border-t border-zinc-100 pt-8 dark:border-zinc-700/40"
-            >
-              contact@bkstudio.tech
-            </SocialLink>
+            <li className="mt-8 border-t border-zinc-100 pt-8 dark:border-zinc-700/40">
+              <p className="text-sm text-zinc-600 dark:text-zinc-400">
+                Want to work together? Send me a DM on{' '}
+                <a href="https://x.com/dpuiger" className="font-medium text-teal-500 hover:text-teal-600 dark:hover:text-teal-400">X</a>
+                {' '}or{' '}
+                <a href="https://www.linkedin.com/in/dpuigerarde/" className="font-medium text-teal-500 hover:text-teal-600 dark:hover:text-teal-400">LinkedIn</a>.
+              </p>
+            </li>
           </ul>
         </div>
       </div>
