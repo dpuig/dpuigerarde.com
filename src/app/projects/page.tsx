@@ -4,11 +4,7 @@ import { Card } from '@/components/Card'
 import { SimpleLayout } from '@/components/SimpleLayout'
 
 const projects = [
-  {
-    name: 'Sovereign K8s Platform',
-    description:
-      'Multi-cloud Kubernetes provisioning using Cluster API and Talos Linux. Immutable, API-managed clusters with zero SSH surface area, designed for data-sovereign environments.',
-  },
+
   {
     name: 'DBaaS Operator',
     description:
