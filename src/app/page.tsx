@@ -73,7 +73,7 @@ function Newsletter() {
         <span className="ml-3">Stay up to date</span>
       </h2>
       <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-400">
-        Get notified when I publish something new about sovereign cloud, edge-AI, and DevSecOps.
+        Get notified when I publish something new about AI agents in DevOps, automated SRE, and MLOps pipelines.
       </p>
       <div className="mt-6 flex">
         <input
@@ -108,34 +108,29 @@ interface StackItem {
 function TechStack() {
   const stack: Array<StackItem> = [
     {
-      layer: 'Provisioning',
-      component: 'Cluster API (CAPI)',
-      description: 'Multi-cloud and on-prem provisioning in Go, free from proprietary APIs.',
+      layer: 'Agentic Orchestration',
+      component: 'Amazon Bedrock AgentCore',
+      description: 'Enterprise-grade orchestration for autonomous AI agents connecting to internal APIs.',
     },
     {
-      layer: 'OS Layer',
-      component: 'Talos Linux',
-      description: 'Immutable, security-hardened, API-managed. No SSH = lower attack surface.',
+      layer: 'Agentic Orchestration',
+      component: 'Gemini Enterprise',
+      description: 'Advanced reasoning platforms for complex multi-step DevOps and SRE agentic workflows.',
     },
     {
-      layer: 'Orchestration',
-      component: 'Kubernetes (CKA)',
-      description: 'Standardized for portability and scale across any environment.',
+      layer: 'MLOps & CI/CD',
+      component: 'ArgoCD / MLflow',
+      description: 'GitOps-driven model deployment and lifecycle management orchestrated by AI agents.',
     },
     {
-      layer: 'Networking',
-      component: 'Cilium (eBPF)',
-      description: 'Deep visibility and identity-based security for modern compliance.',
+      layer: 'Automated SRE',
+      component: 'Autonomous Agents',
+      description: 'LLM-powered incident response, log analysis, and automated remediation systems.',
     },
     {
-      layer: 'Secrets',
-      component: 'OpenBao',
-      description: 'Open-source secrets management that keeps keys out of foreign SaaS.',
-    },
-    {
-      layer: 'AI Inference',
-      component: 'LocalAI / vLLM',
-      description: 'OpenAI-compatible APIs running on your own GPU hardware.',
+      layer: 'Cloud Infrastructure',
+      component: 'AWS / GCP / Kubernetes',
+      description: 'Scalable foundation for hosting robust agentic architectures and vector databases.',
     },
   ]
 
@@ -186,10 +181,10 @@ export default async function Home() {
       <Container className="mt-9">
         <div className="max-w-2xl">
           <h1 className="text-4xl font-bold tracking-tight text-zinc-800 sm:text-5xl dark:text-zinc-100">
-            Daniel Puig Gerarde — Cloud & AI Infrastructure Architect
+            Daniel Puig Gerarde — AI Agent Developer for Cloud & SRE
           </h1>
           <p className="mt-6 text-base text-zinc-600 dark:text-zinc-400 text-justify">
-            I help companies take back control of their data and AI. I design and build private cloud platforms, on-premise AI inference stacks, and automated security pipelines so organizations can run sensitive workloads, fine-tune models on proprietary data, and meet compliance requirements without depending on third-party vendors.
+            I help engineering teams transition from manual operations to AI-driven automation. I design and build autonomous agents for DevOps workflows, MLOps pipelines, and SRE incident response using Amazon Bedrock AgentCore and the Gemini Enterprise Agent Platform. My mission is to orchestrate complex cloud environments and automate operations through intelligent, agentic solutions.
           </p>
           <div className="mt-6 flex gap-6">
             <SocialLink href="https://x.com/dpuiger" aria-label="Follow on X" icon={XIcon} />

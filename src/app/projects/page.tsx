@@ -6,37 +6,37 @@ import { SimpleLayout } from '@/components/SimpleLayout'
 const projects = [
 
   {
-    name: 'DBaaS Operator',
+    name: 'SRE Copilot',
     description:
-      'A Kubernetes operator written in Go for managed database lifecycle: provisioning, scaling, backups, and upgrades for PostgreSQL clusters with automated Day-2 operations.',
+      'An autonomous SRE agent that ingests PagerDuty alerts, queries Datadog metrics, analyzes Kubernetes logs, and executes safe remediation scripts using Amazon Bedrock AgentCore.',
   },
   {
-    name: 'Edge-AI Inference Stack',
+    name: 'MLOps Deployment Agent',
     description:
-      'On-premise LLM serving infrastructure using LocalAI and vLLM. OpenAI-compatible endpoints running on local GPU hardware for private model fine-tuning and inference.',
+      'A specialized agent orchestrating the MLflow to ArgoCD pipeline. Automatically evaluates model drift metrics, triggers retraining, and manages canary deployments for new models.',
   },
   {
-    name: 'eBPF Network Observability',
+    name: 'Cloud Infra Orchestrator',
     description:
-      'Cilium-based zero-trust networking with eBPF-powered observability. Identity-based security policies with deep packet visibility via Hubble dashboards.',
+      'A Gemini Enterprise-powered agent that translates natural language requests and architecture diagrams into validated Terraform modules, integrating with AWS and GCP APIs.',
   },
   {
-    name: 'DevSecOps Pipeline',
+    name: 'CI/CD Security Reviewer',
     description:
-      'Automated CI/CD security pipeline with OpenBao for secrets management, container image signing via Sigstore, and runtime policy enforcement with OPA/Gatekeeper.',
+      'An agent integrated into GitHub Actions that performs automated semantic security reviews of infrastructure-as-code changes before they are merged.',
   },
 ]
 
 export const metadata: Metadata = {
   title: 'Projects',
-  description: 'Open-source tools and platforms I have built for sovereign cloud, edge-AI, and DevSecOps.',
+  description: 'Agentic solutions and Copilots I have built for SRE, MLOps, and DevOps workflows.',
 }
 
 export default function Projects() {
   return (
     <SimpleLayout
-      title="Things I have built to make sovereign infrastructure accessible."
-      intro="These are projects I have worked on to help organizations own their infrastructure, run AI on-premise, and secure their platforms with open-source tools."
+      title="Agentic systems I've built to automate platform engineering."
+      intro="These are projects I have worked on to help organizations transition to AI-driven operations in DevOps, SRE, and machine learning lifecycles."
     >
       <ul
         role="list"

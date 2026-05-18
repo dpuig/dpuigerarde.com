@@ -49,7 +49,7 @@ function MailIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
 export const metadata: Metadata = {
   title: 'About',
   description:
-    'I am Daniel Puig Gerarde, a Sovereign Cloud and AI Infrastructure Architect helping organizations take back control of their data.',
+    'I am Daniel Puig Gerarde, an AI Agent Developer specializing in autonomous solutions for DevOps, MLOps, and SRE environments.',
 }
 
 export default function About() {
@@ -72,16 +72,16 @@ export default function About() {
           </h1>
           <div className="mt-6 space-y-7 text-base text-zinc-600 dark:text-zinc-400 text-justify">
             <p>
-              I architect sovereign cloud platforms that give organizations full control over their data and AI workloads. In an era where data sovereignty, regulatory compliance, and AI privacy are critical business concerns, I help companies move off public clouds and into private, hardened infrastructure built on open-source foundations like Kubernetes, Cluster API, and Talos Linux.
+              I architect AI-driven agentic solutions that automate complex DevOps, MLOps, and SRE workflows. In an era where platform engineering teams are overwhelmed by operational toil, I help organizations transition to autonomous operations. Using platforms like Amazon Bedrock AgentCore and Gemini Enterprise, I design intelligent systems capable of reasoning, tool use, and complex problem-solving in cloud environments.
             </p>
             <p>
-              Go is my language of choice for building infrastructure tooling. Its simplicity, concurrency model, and powerful standard library make it ideal for Kubernetes operators, CLI tools, and platform APIs. I&apos;ve built custom operators for database lifecycle management, written provisioning controllers with Cluster API, and developed internal developer platforms that let engineering teams self-service infrastructure without touching YAML.
+              My background in infrastructure engineering (Kubernetes, Go) serves as the foundation for building reliable AI agents. Understanding the underlying systems allows me to create agents that can safely interact with AWS/GCP APIs, manage CI/CD pipelines, and orchestrate GitOps deployments. I don&apos;t just build chat interfaces; I build system operators that understand infrastructure state and can take corrective actions.
             </p>
             <p>
-              On the networking and security side, I specialize in Cilium and eBPF for identity-based, zero-trust networking, essential for meeting modern compliance requirements. I pair this with OpenBao for sovereign secrets management, ensuring client keys and sensitive data never leave the organization&apos;s perimeter. My DevSecOps approach automates security patching, policy enforcement, and governance from day one.
+              In the MLOps space, I orchestrate the entire model lifecycle using agentic workflows. From automated data validation and training triggers in MLflow to progressive rollouts with ArgoCD, I deploy agents that monitor model drift and manage retraining loops. This reduces the manual overhead of managing complex machine learning pipelines in production.
             </p>
             <p>
-              I&apos;m deeply passionate about edge-AI and on-premise inference. Running large language models on local GPU hardware with tools like LocalAI and vLLM means organizations can fine-tune models on proprietary data without sending a single token to a third-party API. I design the full inference stack, from GPU provisioning to OpenAI-compatible API endpoints, so teams get the power of AI without sacrificing data sovereignty.
+              I am deeply passionate about the future of automated SRE. By connecting LLMs to observability tools and incident management platforms, I create Copilots that can ingest alerts, analyze logs, query metrics, and propose remediation steps—often resolving issues before human intervention is required. My goal is to make "sleep-through-the-night" operations a reality through intelligent automation.
             </p>
           </div>
         </div>
