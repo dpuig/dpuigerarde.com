@@ -1,129 +1,139 @@
-import { Card } from '@/components/Card'
-import { Section } from '@/components/Section'
-import { SimpleLayout } from '@/components/SimpleLayout'
+import { type Metadata } from 'next'
+import { Container } from '@/components/elements/container'
+import { Heading } from '@/components/elements/heading'
+import { Subheading } from '@/components/elements/subheading'
+import { Eyebrow } from '@/components/elements/eyebrow'
+import { Text } from '@/components/elements/text'
 
-function ToolsSection({
-  children,
-  ...props
-}: React.ComponentPropsWithoutRef<typeof Section>) {
-  return (
-    <Section {...props}>
-      <ul role="list" className="space-y-16">
-        {children}
-      </ul>
-    </Section>
-  )
+export const metadata: Metadata = {
+  title: 'Uses | Daniel Puig Gerarde',
+  description: 'The tools, platforms, and technologies I use to architect enterprise cloud and Kubernetes systems.',
 }
 
-function Tool({
-  title,
-  href,
-  children,
-}: {
+interface ToolItem {
   title: string
-  href?: string
-  children: React.ReactNode
-}) {
-  return (
-    <Card as="li">
-      <Card.Title as="h3" href={href}>
-        {title}
-      </Card.Title>
-      <Card.Description>{children}</Card.Description>
-    </Card>
-  )
+  description: string
 }
 
-export const metadata = {
-  title: 'Uses',
-  description: 'The tools, platforms, and technologies I use to build sovereign cloud and AI infrastructure.',
+interface ToolGroup {
+  category: string
+  number: string
+  items: ToolItem[]
 }
+
+const toolGroups: ToolGroup[] = [
+  {
+    category: 'Infrastructure & Orchestration',
+    number: '01',
+    items: [
+      {
+        title: 'Kubernetes',
+        description:
+          'The standard framework for container orchestration. It allows me to build stable, predictable platforms across private hardware and public cloud providers alike.',
+      },
+      {
+        title: 'Terraform',
+        description:
+          'Declarative infrastructure provisioning. I use it to manage foundational cloud resources, networking tables, and base machines before the Kubernetes control plane takes over.',
+      },
+      {
+        title: 'Cluster API (CAPI)',
+        description:
+          'Kubernetes provisioning using Kubernetes itself. By writing Go configurations, I manage the lifecycle of physical and virtual clusters using declarative GitOps workflows.',
+      },
+    ],
+  },
+  {
+    category: 'GitOps, Observability & Storage',
+    number: '02',
+    items: [
+      {
+        title: 'FluxCD',
+        description:
+          'GitOps delivery engine for Kubernetes. It synchronizes cluster state directly with git sources, reconciling changes automatically without human intervention or insecure access credentials.',
+      },
+      {
+        title: 'Prometheus & Grafana',
+        description:
+          'Telemetry collection and system visibility dashboards. These tools provide real time insights into container resource patterns, request metrics, and hardware health.',
+      },
+      {
+        title: 'Rook / Ceph',
+        description:
+          'Software defined storage orchestrator. It manages distributed block devices, shared file systems, and object storage dynamically, eliminating proprietary vendor storage lock.',
+      },
+    ],
+  },
+  {
+    category: 'Development & Productivity',
+    number: '03',
+    items: [
+      {
+        title: 'Go & Python',
+        description:
+          'My primary languages for backend and agent development. I use Go for high performance operators and low level systems work, and Python for machine learning workflows and scripting.',
+      },
+      {
+        title: 'Amazon Bedrock AgentCore',
+        description:
+          'The core orchestration framework for deploying secure, production ready AI agents that connect proprietary foundation models to actual enterprise backend APIs.',
+      },
+      {
+        title: 'AI Agent Frameworks',
+        description:
+          'Dynamic execution libraries used to design multi agent pipelines, tool use routines, and autonomous planning workflows that operate within secure container boundaries.',
+      },
+    ],
+  },
+]
 
 export default function Uses() {
   return (
-    <SimpleLayout
-      title="The tools I use to build sovereign infrastructure."
-      intro="My toolkit for architecting sovereign cloud platforms, deploying edge-AI, and automating DevSecOps, from provisioning to observability."
-    >
-      <div className="space-y-20">
-        <ToolsSection title="Infrastructure & Orchestration">
-          <Tool title="Cluster API (CAPI)">
-            Multi-cloud and on-prem Kubernetes provisioning written in Go.
-            Declarative cluster lifecycle management without proprietary vendor APIs. The foundation of every sovereign platform I build.
-          </Tool>
-          <Tool title="Talos Linux">
-            An immutable, security-hardened operating system designed for
-            Kubernetes. API-managed with no SSH access, dramatically reducing
-            the attack surface. My default OS for production clusters.
-          </Tool>
-          <Tool title="Kubernetes">
-            CKA-compliant container orchestration. Standardized for portability
-            across any environment, whether public cloud, private data center, or
-            edge deployment.
-          </Tool>
-          <Tool title="Terraform / OpenTofu">
-            Infrastructure as Code for provisioning the underlying compute,
-            networking, and storage. I use OpenTofu for fully open-source
-            deployments when vendor neutrality is critical.
-          </Tool>
-        </ToolsSection>
-        <ToolsSection title="Networking & Security">
-          <Tool title="Cilium (eBPF)">
-            eBPF-powered networking, observability, and security for
-            Kubernetes. Identity-based policies, transparent encryption, and
-            deep packet visibility via Hubble. Essential for zero-trust
-            architectures and modern compliance requirements.
-          </Tool>
-          <Tool title="OpenBao">
-            Open-source secrets management (forked from HashiCorp Vault).
-            Dynamic secrets, encryption as a service, and PKI that ensures
-            client keys are never stored in a foreign-owned SaaS.
-          </Tool>
-          <Tool title="Falco">
-            Runtime security and threat detection for containers and
-            Kubernetes. Real-time alerting on unexpected behavior, syscall
-            monitoring, and audit logging.
-          </Tool>
-        </ToolsSection>
-        <ToolsSection title="AI & Machine Learning">
-          <Tool title="LocalAI">
-            OpenAI-compatible API running entirely on local hardware.
-            Supports LLMs, embeddings, and image generation without sending
-            data to third-party services. Perfect for sovereign AI deployments.
-          </Tool>
-          <Tool title="vLLM">
-            High-throughput LLM serving engine optimized for production
-            inference. Continuous batching and PagedAttention for maximum
-            GPU utilization on private infrastructure.
-          </Tool>
-          <Tool title="Ollama">
-            Simple, developer-friendly local model runner. Great for
-            prototyping and development before scaling to production
-            inference with vLLM.
-          </Tool>
-        </ToolsSection>
-        <ToolsSection title="Development & Productivity">
-          <Tool title="Go">
-            My primary language for infrastructure tooling: Kubernetes
-            operators, CLI tools, platform APIs, and custom controllers.
-            The standard library and concurrency model are unmatched
-            for systems programming.
-          </Tool>
-          <Tool title="VS Code">
-            My editor of choice with the Go extension, Kubernetes tools,
-            and Copilot. The integrated terminal and debugger make it
-            ideal for operator development.
-          </Tool>
-          <Tool title="iTerm2 + tmux">
-            Terminal multiplexing for managing multiple clusters, SSH
-            sessions, and development environments simultaneously.
-          </Tool>
-          <Tool title="Docker & Podman">
-            Container runtimes for local development, CI/CD pipelines,
-            and building OCI-compliant images for production deployment.
-          </Tool>
-        </ToolsSection>
-      </div>
-    </SimpleLayout>
+    <div className="py-16 sm:py-24">
+      {/* Intro Header */}
+      <Container className="mb-20 sm:mb-28">
+        <div className="max-w-3xl flex flex-col items-start gap-4">
+          <Eyebrow className="tracking-wider uppercase">My Tech & Gear Stack</Eyebrow>
+          <Heading className="leading-[1.1] sm:leading-[1.05]">
+            The Tools I Use to Build Scale Ready Platforms.
+          </Heading>
+          <Text size="lg" className="mt-4 max-w-2xl text-justify">
+            A list of tools, platforms, and hardware I rely on to build and run stable container environments and AI infrastructure.
+          </Text>
+        </div>
+      </Container>
+
+      {/* Tools Breakdown Grid */}
+      <Container className="flex flex-col gap-24">
+        {toolGroups.map((group) => (
+          <div
+            key={group.category}
+            className="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-16 border-t border-olive-950/10 dark:border-white/10 pt-16"
+          >
+            {/* Sidebar title */}
+            <div className="lg:col-span-1 flex flex-col gap-3">
+              <Eyebrow className="uppercase tracking-wider font-mono text-xs">
+                Group {group.number}
+              </Eyebrow>
+              <Subheading className="text-3xl font-bold font-display text-olive-950 dark:text-white leading-tight">
+                {group.category}
+              </Subheading>
+            </div>
+
+            {/* Content Stack */}
+            <div className="lg:col-span-2 flex flex-col gap-10">
+              {group.items.map((item) => (
+                <div key={item.title} className="flex flex-col gap-3 group">
+                  <h3 className="text-xl font-bold text-olive-950 dark:text-white group-hover:text-olive-700 dark:group-hover:text-olive-300 transition-colors duration-200">
+                    {item.title}
+                  </h3>
+                  <Text className="text-sm/6 text-justify">{item.description}</Text>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+      </Container>
+    </div>
   )
 }

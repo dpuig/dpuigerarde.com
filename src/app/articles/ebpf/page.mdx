@@ -3,9 +3,9 @@ import { ArticleLayout } from '@/components/ArticleLayout'
 export const article = {
   author: 'Daniel Puig',
   date: '2022-02-24',
-  title: 'Understanding eBPF: A Game-Changer for Linux Kernel Extensions',
+  title: 'Observing the Linux Kernel with eBPF',
   description:
-    'eBPF evolved from the original Berkeley Packet Filter, which primarily handled packet filtering. Now, it lets you run custom programs in the Linux kernel without changing its source, hooking into events like network packets or system calls. This unlocks powerful capabilities for monitoring, filtering, and even modifying system operations.',
+    'Running sandboxed programs inside the Linux kernel to trace system calls and inspect packet flow without patching source code or loading unstable kernel modules.',
 }
 
 export const metadata = {
@@ -15,35 +15,35 @@ export const metadata = {
 
 export default (props) => <ArticleLayout article={article} {...props} />
 
-- eBPF enables safe and efficient kernel extensions without altering the kernel’s source code.
-- It supports diverse applications in observability, security, and networking.
-- Its programmability and compatibility make it indispensable in today’s Linux ecosystem.
+Before eBPF, getting deep visibility into the Linux kernel was a high risk operation. You either wrote a custom kernel module that could easily panic the server, or you patched the kernel source and recompiled the operating system.
 
-## What is eBPF?
-**eBPF** is an advanced evolution of the original **Berkeley Packet Filter (BPF)**, which was initially developed to filter network packets. While BPF had a narrow focus, **eBPF** expands its scope dramatically. It enables users to execute custom programs within the Linux kernel without altering the kernel's source code. These programs can hook into various kernel events—such as network packets, system calls, or tracepoints—allowing for diverse tasks like monitoring, filtering, or even modifying system operations.
+In my work building container platforms, eBPF has changed how we trace system calls and route packets. It runs sandboxed code inside the kernel in response to system events, providing low latency observation and networking without the risk of system crashes.
 
-## Why is eBPF Important?
+## How it works
 
-### 1. Safety and Security
-Unlike traditional kernel modules, which could crash the system if flawed, eBPF programs are sandboxed and subjected to rigorous verification by the kernel before execution. This ensures they cannot access unauthorized memory or destabilize the system, providing a robust safety net for developers.
+At its core, eBPF allows developers to write C or Go code, compile it to eBPF bytecode, and load it directly into the kernel. 
 
-### 2. Performance
-By operating directly within the kernel, eBPF programs achieve low-latency event processing. This is critical for high-performance scenarios like networking or real-time system monitoring, where every microsecond counts.
+The magic happens in two places:
+1. **The Kernel Verifier:** Before any code executes, the verifier reads the bytecode to guarantee safety. It checks that the program has no infinite loops, cannot access out of bounds memory, and terminates safely. If the verifier is not happy, the program does not run.
+2. **Dynamic Hooking:** Once verified, the program attaches to specific kernel hooks. These can be system calls, tracepoints, network socket events, or kernel probes (kprobes).
 
-### 3. Flexibility and Versatility
-eBPF is a Swiss Army knife for kernel extensions. It supports a broad spectrum of use cases:
-**Observability:** Tools like **BCC (BPF Compiler Collection)** and bpftrace harness eBPF to trace system calls, monitor network traffic, or profile CPU usage with minimal overhead.
-**Security:** eBPF can enforce policies or detect anomalies in real time.
-**Networking:** It powers advanced solutions like load balancing and packet filtering.
+This architecture allows us to run custom logic in kernel space without risking the stability of the entire system.
 
-### 4. Programmability
-Developers can write eBPF programs in familiar languages like C, which are then compiled into eBPF bytecode and executed by the kernel’s eBPF virtual machine. This programmability empowers users to craft bespoke kernel behaviors tailored to specific needs.
+## Why eBPF matters in production
 
-### 5. Widespread Adoption
-eBPF is now a standard feature in modern Linux kernels and is seamlessly supported by major distributions. This broad compatibility ensures that eBPF programs can be deployed across diverse environments without friction.
+### Safety by design
+If a traditional kernel module has a null pointer dereference, the machine crashes. With eBPF, the verifier catches these issues before the code ever runs. We get kernel level access with user space safety.
 
-## Real-World Applications
-eBPF’s versatility shines through in its practical applications across multiple domains:
-**Observability:** Tools like Pixie and Sysdig leverage eBPF to deliver deep insights into system and application behavior without requiring manual instrumentation. This is invaluable in complex microservices architectures.
-**Security:** eBPF enables real-time monitoring of system calls to detect suspicious activities or enforce network access controls, enhancing system defenses.
-**Networking:** Projects like Cilium use eBPF to provide high-performance networking and security for containerized environments, handling tasks like load balancing, service discovery, and network policy enforcement.
+### Zero context switches
+Traditional observability tools poll system state from user space, requiring constant context switching between user space and kernel space. eBPF runs directly in the kernel, processing events as they happen and only sending aggregated metrics back up to user space. This keeps CPU overhead extremely low, even under heavy network load.
+
+### Dynamic system tracing
+We can attach and detach programs on the fly. If you are debugging a socket leak or tracking down slow filesystem operations, you can load a bpftrace script, collect the data, and detach it without rebooting the server or disrupting running processes.
+
+## Real world orchestration
+
+In modern Kubernetes environments, eBPF is moving from a debugging tool to a core infrastructure layer.
+
+* **Networking with Cilium:** Traditional Kubernetes network policies rely on iptables, which processes rules sequentially. As clusters grow, iptables performance degrades. Cilium bypasses iptables entirely, using eBPF to route packets directly between container sockets.
+* **Runtime security with Falco:** By hooking into system calls, Falco detects unexpected container behavior—like a shell running inside a pod or a process modifying a system binary—directly at the kernel layer, before the event can cause damage.
+* **Observability with Hubble:** Instead of injecting sidecar proxies to capture network traces, Hubble uses eBPF to observe traffic at the kernel level, giving us complete visibility into HTTP, gRPC, and TCP flows with near zero impact on performance.

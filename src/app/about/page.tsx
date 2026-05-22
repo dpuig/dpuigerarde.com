@@ -1,110 +1,110 @@
 import { type Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
-import clsx from 'clsx'
-
-import { Container } from '@/components/Container'
-import {
-  GitHubIcon,
-  LinkedInIcon,
-  XIcon,
-} from '@/components/SocialIcons'
+import { Container } from '@/components/elements/container'
+import { Heading } from '@/components/elements/heading'
+import { Eyebrow } from '@/components/elements/eyebrow'
+import { Text } from '@/components/elements/text'
+import { XIcon } from '@/components/icons/social/x-icon'
+import { GitHubIcon } from '@/components/icons/social/github-icon'
+import { LinkedInIcon } from '@/components/icons/social/linkedin-icon'
 import portraitImage from '@/images/portrait.jpg'
 
-function SocialLink({
-  className,
+function SocialRowLink({
   href,
-  children,
   icon: Icon,
+  children,
 }: {
-  className?: string
   href: string
   icon: React.ComponentType<{ className?: string }>
   children: React.ReactNode
 }) {
   return (
-    <li className={clsx(className, 'flex')}>
-      <Link
-        href={href}
-        className="group flex text-sm font-medium text-zinc-800 transition hover:text-teal-500 dark:text-zinc-200 dark:hover:text-teal-500"
-      >
-        <Icon className="h-6 w-6 flex-none fill-zinc-500 transition group-hover:fill-teal-500" />
-        <span className="ml-4">{children}</span>
-      </Link>
-    </li>
-  )
-}
-
-function MailIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
-  return (
-    <svg viewBox="0 0 24 24" aria-hidden="true" {...props}>
-      <path
-        fillRule="evenodd"
-        d="M6 5a3 3 0 0 0-3 3v8a3 3 0 0 0 3 3h12a3 3 0 0 0 3-3V8a3 3 0 0 0-3-3H6Zm.245 2.187a.75.75 0 0 0-.99 1.126l6.25 5.5a.75.75 0 0 0 .99 0l6.25-5.5a.75.75 0 0 0-.99-1.126L12 12.251 6.245 7.187Z"
-      />
-    </svg>
+    <a
+      href={href}
+      target="_blank"
+      className="group flex items-center gap-3 text-sm font-medium text-olive-950 dark:text-white hover:text-olive-700 dark:hover:text-olive-400 transition-colors duration-200"
+    >
+      <Icon className="h-5 w-5 fill-olive-800 dark:fill-olive-400 group-hover:fill-olive-950 dark:group-hover:fill-white transition-colors duration-200" />
+      <span>{children}</span>
+    </a>
   )
 }
 
 export const metadata: Metadata = {
-  title: 'About',
+  title: 'About | Daniel Puig Gerarde',
   description:
-    'I am Daniel Puig Gerarde, an AI Agent Developer specializing in autonomous solutions for DevOps, MLOps, and SRE environments.',
+    'I am Daniel Puig Gerarde, a Software Architect and Cloud/DevOps Consultant specializing in enterprise Kubernetes and cloud native systems.',
 }
 
 export default function About() {
   return (
-    <Container className="mt-16 sm:mt-32">
-      <div className="grid grid-cols-1 gap-y-16 lg:grid-cols-2 lg:grid-rows-[auto_1fr] lg:gap-y-12">
-        <div className="lg:pl-20">
-          <div className="max-w-xs px-2.5 lg:max-w-none">
+    <Container className="py-16 sm:py-24">
+      <div className="grid grid-cols-1 gap-y-16 lg:grid-cols-2 lg:gap-x-16 lg:items-start">
+        {/* Profile Image & Contact Panel */}
+        <div className="lg:order-last flex flex-col gap-8">
+          <div className="relative max-w-sm mx-auto lg:max-w-none rounded-2xl border border-olive-950/10 p-2 bg-olive-950/[0.02] dark:border-white/10 dark:bg-white/[0.02]">
             <Image
               src={portraitImage}
-              alt=""
+              alt="Daniel Puig Gerarde portrait"
               sizes="(min-width: 1024px) 32rem, 20rem"
-              className="aspect-square rotate-3 rounded-2xl bg-zinc-100 object-cover dark:bg-zinc-800"
+              className="aspect-square rounded-xl object-cover"
+              priority
             />
           </div>
-        </div>
-        <div className="lg:order-first lg:row-span-2">
-          <h1 className="text-4xl font-bold tracking-tight text-zinc-800 sm:text-5xl dark:text-zinc-100">
-            About me.
-          </h1>
-          <div className="mt-6 space-y-7 text-base text-zinc-600 dark:text-zinc-400 text-justify">
-            <p>
-              I architect AI-driven agentic solutions that automate complex DevOps, MLOps, and SRE workflows. In an era where platform engineering teams are overwhelmed by operational toil, I help organizations transition to autonomous operations. Using platforms like Amazon Bedrock AgentCore and Gemini Enterprise, I design intelligent systems capable of reasoning, tool use, and complex problem-solving in cloud environments.
-            </p>
-            <p>
-              My background in infrastructure engineering (Kubernetes, Go) serves as the foundation for building reliable AI agents. Understanding the underlying systems allows me to create agents that can safely interact with AWS/GCP APIs, manage CI/CD pipelines, and orchestrate GitOps deployments. I don&apos;t just build chat interfaces; I build system operators that understand infrastructure state and can take corrective actions.
-            </p>
-            <p>
-              In the MLOps space, I orchestrate the entire model lifecycle using agentic workflows. From automated data validation and training triggers in MLflow to progressive rollouts with ArgoCD, I deploy agents that monitor model drift and manage retraining loops. This reduces the manual overhead of managing complex machine learning pipelines in production.
-            </p>
-            <p>
-              I am deeply passionate about the future of automated SRE. By connecting LLMs to observability tools and incident management platforms, I create Copilots that can ingest alerts, analyze logs, query metrics, and propose remediation steps—often resolving issues before human intervention is required. My goal is to make "sleep-through-the-night" operations a reality through intelligent automation.
-            </p>
+
+          <div className="rounded-2xl border border-olive-950/10 bg-olive-950/[0.02] p-6 dark:border-white/10 dark:bg-white/[0.02] flex flex-col gap-6">
+            <Eyebrow className="uppercase tracking-wider">Connect with me</Eyebrow>
+            <div className="flex flex-col gap-4">
+              <SocialRowLink href="https://x.com/dpuiger" icon={XIcon}>
+                Follow on X (Twitter)
+              </SocialRowLink>
+              <SocialRowLink href="https://github.com/dpuig" icon={GitHubIcon}>
+                Follow on GitHub
+              </SocialRowLink>
+              <SocialRowLink href="https://www.linkedin.com/in/dpuigerarde/" icon={LinkedInIcon}>
+                Connect on LinkedIn
+              </SocialRowLink>
+            </div>
+            <div className="border-t border-olive-950/10 pt-6 dark:border-white/10">
+              <p className="text-sm text-olive-700 dark:text-olive-400 leading-relaxed">
+                Interested in working together? Send me a message on{' '}
+                <a href="https://www.linkedin.com/in/dpuigerarde/" className="font-semibold text-olive-950 dark:text-white underline hover:text-olive-700 dark:hover:text-olive-400">
+                  LinkedIn DM
+                </a>{' '}
+                or drop a line on{' '}
+                <a href="https://x.com/dpuiger" className="font-semibold text-olive-950 dark:text-white underline hover:text-olive-700 dark:hover:text-olive-400">
+                  X
+                </a>. Let&apos;s architect something great.
+              </p>
+            </div>
           </div>
         </div>
-        <div className="lg:pl-20">
-          <ul role="list">
-            <SocialLink href="https://x.com/dpuiger" icon={XIcon}>
-              Follow on X
-            </SocialLink>
-            <SocialLink href="https://github.com/dpuig" icon={GitHubIcon} className="mt-4">
-              Follow on GitHub
-            </SocialLink>
-            <SocialLink href="https://www.linkedin.com/in/dpuigerarde/" icon={LinkedInIcon} className="mt-4">
-              Follow on LinkedIn
-            </SocialLink>
-            <li className="mt-8 border-t border-zinc-100 pt-8 dark:border-zinc-700/40">
-              <p className="text-sm text-zinc-600 dark:text-zinc-400">
-                Want to work together? Send me a DM on{' '}
-                <a href="https://x.com/dpuiger" className="font-medium text-teal-500 hover:text-teal-600 dark:hover:text-teal-400">X</a>
-                {' '}or{' '}
-                <a href="https://www.linkedin.com/in/dpuigerarde/" className="font-medium text-teal-500 hover:text-teal-600 dark:hover:text-teal-400">LinkedIn</a>.
-              </p>
-            </li>
-          </ul>
+
+        {/* Narrative Biography */}
+        <div className="flex flex-col gap-6">
+          <Eyebrow className="uppercase tracking-wider">The Person Behind the Platforms</Eyebrow>
+          <Heading className="text-4xl sm:text-5xl font-bold text-olive-950 dark:text-white tracking-tight">
+            About me.
+          </Heading>
+          
+          <div className="mt-4 flex flex-col gap-6 text-justify">
+            <Text size="lg" className="leading-relaxed">
+              I run an independent consulting practice focused on building secure, scalable container platforms and automating cloud infrastructure. My work centers on bringing clarity and reliability to complex environments. Rather than supplying generic DevOps templates, I collaborate closely with engineering teams to solve real operational bottlenecks—from database scaling issues to specialized compute configurations.
+            </Text>
+            
+            <Text size="md" className="leading-relaxed">
+              My core expertise is in Kubernetes and its cloud native ecosystem. Whether writing custom Go controllers to automate applications or configuring low level runtime integrations, I design platform foundations that enable developers to ship code safely. The goal is to build self service pipelines that work without requiring direct developer cluster access or manual YAML tweaking.
+            </Text>
+            
+            <Text size="md" className="leading-relaxed">
+              I treat infrastructure as software. That means everything belongs in git, managed through declarative GitOps loops. I build delivery pipelines using ArgoCD and Crossplane to automate provisioning and eliminate the usual friction between writing code and deploying resources. This keeps deployments repeatable, fully versioned, and easy to audit.
+            </Text>
+            
+            <Text size="md" className="leading-relaxed">
+              Reliable systems require proactive security and deep observability. I use Cilium eBPF to implement identity based network policies, and configure Prometheus and Grafana for precise system telemetry. I believe that security shouldn&apos;t be an obstacle; it should be standard, transparent, and embedded directly into the platform defaults.
+            </Text>
+          </div>
         </div>
       </div>
     </Container>
